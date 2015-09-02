@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#txtButton').click(function () {
+            var contentType = 'application/' + $('#selectCompressionFormat').val();
+            alert(contentType);
+            var meta = document.createElement('meta');
+            meta.httpEquiv = 'content-type';
+            meta.content = 'application/gzip';
+            document.getElementsByTagName('head')[0].appendChild(meta);
+            $.ajax({
+                //'contentType': contentType,
+                'url': '/Home/accept',
+                'data': { 'txtName': $('#txtName').val() },
+               'type': 'POST',
+               'dataType': 'json',
+                'success': function () {
+                    window.location.href = '/Home/Contact';
+                }
+            });
+        });
+    });
+</script>
+<label for="txtName">Name</label>
+<input type="text" name="txtName" id="txtName" /><br />
+Content Type
+<select id="selectCompressionFormat">
+    <option selected>gzip</option>
+    <option>deflate</option>
+</select>
+<input class="button" value="Submit" type="submit" id="txtButton" />
